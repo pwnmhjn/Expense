@@ -14,6 +14,8 @@ type Transaction {
 type Query {
     transactions:[Transaction!]
     transaction(transactionId:ID!):Transaction
+    #//TODO => ADD CATEGORY STATICSTIC
+
 }
 
 type Mutation {
@@ -40,6 +42,5 @@ input UpdateTransactionInput {
     date:String!
     location:String
 }
-
 `
 export default transactionTypeDef;
