@@ -7,6 +7,7 @@ import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import mergedResolver from "./resolvers/index.js";
 import mergedTypeDefs from "./TypeDefs/index.js"
+import { connectDB } from "./db/connectDB.js";
 const app = express()
 
 const httpServer = http.createServer(app)
@@ -31,5 +32,7 @@ app.use(
 await new Promise((resolve) =>
     httpServer.listen({ port: 4000 }, resolve),
 );
+
+await connectDB()
 console.log(`🚀 Server ready at http://localhost:4000/`);
 
