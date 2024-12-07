@@ -8,15 +8,15 @@ type User {
 }
 
 type Query {
-    users:[User!]
+    # users:[User!]
     authUser:User
     user(userId:ID!):User
 }
 
 type Mutation {
     signUp(input:SignUpInput):User
-    login(input:LogInInput):User
-    logout:LogoutResponse
+    logIn(input:LogInInput):User
+    logOut:LogoutResponse
 }
 
 input SignUpInput {
