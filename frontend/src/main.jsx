@@ -10,7 +10,7 @@ const client = new ApolloClient({
   //TODO => update the uri on production
   uri: 'http://localhost:4000/graphql',// the URL of our GraphQl Server.
   cache: new InMemoryCache(),// Apollo client uses to caches query results after fetching them.
-  credential: "include" // This tells apollo client to send cookies along with every request to the sercer.
+  credentials: "include" // This tells apollo client to send cookies along with every request to the sercer.
 });
 
 createRoot(document.getElementById('root')).render(

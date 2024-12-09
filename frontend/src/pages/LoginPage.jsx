@@ -18,14 +18,16 @@ const LoginPage = () => {
             [name]: value,
         }));
     };
+
     const [login, { loading }] = useMutation(LOG_IN, { refetchQueries: ["GetAuthenticatedUser"] })
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await login({
                 variables: {
                     input: loginData
-                }
+                },
             })
 
         } catch (error) {
