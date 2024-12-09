@@ -6,7 +6,9 @@ const userResolver = {
     Mutation: {
         signUp: async (_, { input }, context) => {
             try {
+
                 const { username, name, password, gender } = input;
+
                 if (!username || !name || !password || !gender) {
                     throw new Error("All Field are Required");
                 }
@@ -27,6 +29,8 @@ const userResolver = {
                 });
                 await newUser.save();
                 await context.login(newUser);
+                // console.log("after signin : ", context.getUser());
+
                 return newUser;
             } catch (err) {
                 console.log("Error in SignUp: ", err);
@@ -36,6 +40,9 @@ const userResolver = {
         logIn: async (_, { input }, context) => {
             try {
                 const { username, password } = input;
+                if (!username || !password) {
+                    throw new Error("All Field are Required");
+                }
                 const { user } = await context.authenticate("graphql-local", {
                     username,
                     password,
@@ -51,10 +58,10 @@ const userResolver = {
             try {
 
                 await context.logout();
-                req.session.destroy((err) => {
+                context.req.session.destroy((err) => {
                     if (err) throw err
                 })
-                req.clearCookie("connect.sid")
+                context.req.clearCookie("connect.sid")
                 return {
                     message: "Logout SuccessFully"
                 }
@@ -69,13 +76,12 @@ const userResolver = {
     Query: {
         authUser: async (_, __, context) => {
             try {
+
                 const user = await context.getUser()
                 return user
-
             } catch (err) {
                 console.log("Error in AuthUser: ", err)
                 throw new Error(err.message || "internal Server Error")
-
             }
         },
         user: async (_, { userId }) => {

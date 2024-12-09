@@ -15,15 +15,17 @@ import mergedResolver from "./resolvers/index.js";
 import mergedTypeDefs from "./TypeDefs/index.js"
 import { connectDB } from "./db/connectDB.js";
 import { configurePassport } from "./passport/passport.config.js";
-const app = express()
 
+configurePassport();
+const app = express()
 const httpServer = http.createServer(app)
 
 const MongoDbStore = connectMongo(session)
 
+
 const store = new MongoDbStore({
     uri: process.env.MONGO_URL,
-    collection: "session"
+    collection: "sessions"
 })
 
 store.on("error", (err) => console.log(err))
@@ -51,7 +53,7 @@ const server = new ApolloServer({
 await server.start()
 
 app.use(
-    '/',
+    '/graphql',
     cors({
         origin: "http://localhost:3000",
         credentials: true
