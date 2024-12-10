@@ -4,13 +4,18 @@ import { useParams } from "react-router-dom"
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_TRANSACTION } from "../graphql/queries/transaction.query";
 import { UPDATE_TRANSACTION } from "../graphql/mutations/transaction.mutation"
+import { GET_TRANSACTION_STATISTICS } from "../graphql/queries/transaction.query";
 import toast from "react-hot-toast"
 const TransactionPage = () => {
     const { id } = useParams()
     const { data, loading } = useQuery(GET_TRANSACTION, { variables: { id: id } })
 
+    console.log("Transaction: ", data);
 
-    const [updateTransaction, { loading: loadingUpdate }] = useMutation(UPDATE_TRANSACTION)
+
+    const [updateTransaction, { loading: loadingUpdate }] = useMutation(UPDATE_TRANSACTION, { refetchQueries: [{ query: GET_TRANSACTION_STATISTICS }] })
+
+
     const [formData, setFormData] = useState({
         description: data?.transaction?.description || '',
         paymentType: data?.transaction?.paymentType || '',
