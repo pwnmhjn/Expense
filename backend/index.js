@@ -5,6 +5,8 @@ import dotenv from "dotenv"
 
 import path from "path";
 
+import { mergeTypeDefs } from "@graphql-tools/merge";
+
 import passport from "passport";
 import session from "express-session";
 import connectMongo from "connect-mongodb-session";
@@ -16,12 +18,16 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import { buildContext } from "graphql-passport";
 
 import mergedResolvers from "./resolvers/index.js";
-import mergedTypeDefs from "./typeDefs/index.js"
+// import mergedTypeDefs from "./typeDefs/index.js"
 
 
 import { connectDB } from "./db/connectDB.js";
 import { configurePassport } from "./passport/passport.config.js";
 
+import userTypeDef from "./typeDefs/users.typeDef.js";
+import transactionTypeDef from "./typeDefs/transaction.typeDef.js";
+
+const mergedTypeDefs = mergeTypeDefs([userTypeDef, transactionTypeDef])
 
 
 
